@@ -1,5 +1,6 @@
 import Dexie, { type EntityTable } from 'dexie';
 import { STORAGE_PREFIX } from '@/lib/constants';
+import type { Dish } from '@/lib/food/types';
 import type { DayPlan, PlanMeta, ShoppingItem, StockItem } from './types';
 
 /**
@@ -11,6 +12,8 @@ export class KondateDB extends Dexie {
   shopping!: EntityTable<ShoppingItem, 'id'>;
   stock!: EntityTable<StockItem, 'foodId'>;
   planMeta!: EntityTable<PlanMeta, 'planId'>;
+  /** ユーザーが追加した料理（外部 AI などで作ったもの） */
+  customDishes!: EntityTable<Dish, 'id'>;
 
   constructor(name = STORAGE_PREFIX) {
     super(name);
@@ -22,12 +25,15 @@ export class KondateDB extends Dexie {
     this.version(2).stores({
       planMeta: 'planId, startDate',
     });
+    this.version(3).stores({
+      customDishes: 'id',
+    });
   }
 }
 
 export const db = new KondateDB();
 
-/** 献立・買い物・在庫をすべて消す（設定は残す） */
+/** 献立・買い物・在庫をすべて消す（設定と、追加した料理は残す） */
 export async function clearAllData(): Promise<void> {
   await db.transaction('rw', [db.plans, db.shopping, db.stock, db.planMeta], async () => {
     await Promise.all([

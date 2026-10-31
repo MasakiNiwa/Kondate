@@ -73,3 +73,8 @@
 - モデルの保存は [共通モデル保存仕様 v1](SHARED_MODEL_STORAGE.md)（OPFS の `shared-models/`）。同じ github.io の他のサイトと共有し、ファイルへの書き出し（バックアップ）・取り込みができる
 - モデルの一覧・入手先は LLLM-Study と同じ（`src/lib/llm/modelCatalog.ts`）
 - `src/features/ai/localBackend.ts` が端末内の AI を AI の入口（`aiClient.ts`）に登録する。応答ごとの AI で、負荷や特性に合わせてクラウドと使い分けられる
+
+## 料理の追加（Phase 5）
+
+- `src/lib/food/customDish.ts`: 外部 AI 用のプロンプト（アプリの食材 ID の一覧と出力の形）を作り、返ってきた JSON を zod で検証して `Dish` にする。知らない食材を使う料理は取り込まない。栄養は AI に作らせず、食材から計算する
+- 追加した料理は IndexedDB（`customDishes`）に保存し、`registerCustomDishes` で料理の一覧に登録する。献立の計算では `PlanRequest.customDishes` で Worker に渡す

@@ -1,5 +1,5 @@
 import type { Targets } from '@/lib/food/reference';
-import type { NutrientKey, Nutrients } from '@/lib/food/types';
+import type { Dish, NutrientKey, Nutrients } from '@/lib/food/types';
 
 /** 好み。never は計算から外す */
 export type Pref = 'like' | 'neutral' | 'dislike' | 'never';
@@ -62,6 +62,8 @@ export interface PlanRequest {
   useFreezer: boolean;
   /** ソルバーの制限時間（秒） */
   timeLimit: number;
+  /** ユーザーが追加した料理（Worker に渡して候補に入れる） */
+  customDishes?: Dish[];
 }
 
 export interface PlannedDay {

@@ -3,13 +3,15 @@ import { evaluatePlan } from './evaluate';
 import { buildModel } from './model';
 import { dayKey } from './scoring';
 import type { PlanRequest, PlanResult, PlannedDay } from './types';
-import { getDish, ROLES } from '@/lib/food/catalog';
+import { getDish, registerCustomDishes, ROLES } from '@/lib/food/catalog';
 
 type LegacySolve = Pick<Highs, 'solve'>;
 
 /** 献立を計算する（HiGHS のインスタンスを受け取るので、Worker でもテストでも使える） */
 export function solvePlan(req: PlanRequest, highs: LegacySolve): PlanResult {
   const t0 = performance.now();
+  // Worker は別のメモリなので、追加した料理をここで登録する
+  if (req.customDishes) registerCustomDishes(req.customDishes);
   const model = buildModel(req);
   const stats = { variables: model.variables, constraints: model.constraints };
   let solution;

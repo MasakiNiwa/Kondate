@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { setupLocalBackend } from '@/features/ai/localBackend';
+import { useCustomDishes } from '@/features/custom/customDishStore';
 import { useEngine } from '@/features/engine/engineStore';
 import { useSettings } from '@/features/settings/settingsStore';
 import { subscribeSharedModels } from '@/lib/llm/modelStorage';
@@ -14,6 +15,7 @@ export function useStartup() {
       setupLocalBackend();
     }
     let cancelled = false;
+    void useCustomDishes.getState().load();
     void useEngine.getState().detectWebGpu();
     (async () => {
       const { autoLoadLastModel, lastModelName } = useSettings.getState();

@@ -4,7 +4,28 @@ import { addNutrients, zeroNutrients } from './nutrients';
 import type { Dish, DishRole, Food, Nutrients } from './types';
 
 export const FOOD_MAP: ReadonlyMap<string, Food> = new Map(FOODS.map((f) => [f.id, f]));
-export const DISH_MAP: ReadonlyMap<string, Dish> = new Map(DISHES.map((d) => [d.id, d]));
+const nutritionCache = new Map<string, Nutrients>();
+
+/** 組み込みの料理 + ユーザーが追加した料理 */
+let allList: Dish[] = [...DISHES];
+const DISH_MAP = new Map<string, Dish>(DISHES.map((d) => [d.id, d]));
+
+/** すべての料理（ユーザーが追加した料理を含む） */
+export function allDishes(): readonly Dish[] {
+  return allList;
+}
+
+/** ユーザーが追加した料理を登録する（同じ ID は置き換える。Worker でも呼ぶ） */
+export function registerCustomDishes(list: Dish[]): void {
+  const builtIn = new Set(DISHES.map((d) => d.id));
+  for (const id of [...DISH_MAP.keys()]) if (!builtIn.has(id)) DISH_MAP.delete(id);
+  for (const d of list) {
+    if (builtIn.has(d.id)) continue;
+    DISH_MAP.set(d.id, d);
+    nutritionCache.delete(d.id);
+  }
+  allList = [...DISHES, ...list.filter((d) => !builtIn.has(d.id))];
+}
 
 export function getFood(id: string): Food | undefined {
   return FOOD_MAP.get(id);
@@ -15,8 +36,6 @@ export function getDish(id: string): Dish | undefined {
 
 export const ROLE_LABELS: Record<DishRole, string> = { main: '主菜', side: '副菜', soup: '汁物' };
 export const ROLES: DishRole[] = ['main', 'side', 'soup'];
-
-const nutritionCache = new Map<string, Nutrients>();
 
 /** 料理 1 人分の栄養 */
 export function dishNutrition(dish: Dish): Nutrients {
@@ -90,5 +109,5 @@ export function seasonalPrice(food: Food, month: number): number {
 
 /** 食材が使われている料理 */
 export function dishesUsingFood(foodId: string): Dish[] {
-  return DISHES.filter((d) => d.ingredients.some((i) => i.foodId === foodId));
+  return allList.filter((d) => d.ingredients.some((i) => i.foodId === foodId));
 }

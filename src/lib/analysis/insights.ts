@@ -1,5 +1,4 @@
-import { DISHES } from '@/lib/food/dishes';
-import { FOOD_MAP, dishNutrition, getDish, isInSeason } from '@/lib/food/catalog';
+import { FOOD_MAP, dishNutrition, getDish, isInSeason, allDishes } from '@/lib/food/catalog';
 import { NUTRIENTS, NUTRIENT_LIST } from '@/lib/food/nutrients';
 import type { Targets } from '@/lib/food/reference';
 import type { NutrientKey } from '@/lib/food/types';
@@ -30,10 +29,11 @@ export type InsightRule = (ctx: InsightContext) => Insight | Insight[] | null;
 
 /** 栄養素あたりの含有量が多い料理（エネルギー 100kcal あたり） */
 export function richDishes(key: NutrientKey, limit = 3): string[] {
-  return DISHES.map((d) => {
-    const n = dishNutrition(d);
-    return { id: d.id, v: n[key] / Math.max(50, n.energy) };
-  })
+  return allDishes()
+    .map((d) => {
+      const n = dishNutrition(d);
+      return { id: d.id, v: n[key] / Math.max(50, n.energy) };
+    })
     .sort((a, b) => b.v - a.v)
     .slice(0, limit)
     .map((x) => x.id);

@@ -5,7 +5,10 @@ import { Button } from '@/components/ui/Button';
 import { Section } from '@/components/ui/Card';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { Field } from '@/components/ui/Field';
-import { clearAllData } from '@/lib/db/db';
+import { clearAllData, db } from '@/lib/db/db';
+import { useCustomDishes } from '@/features/custom/customDishStore';
+import { usePrefs } from '@/features/prefs/prefsStore';
+import { useChat } from '@/features/ai/chatStore';
 import { STORAGE_PREFIX } from '@/lib/constants';
 import { errorMessage } from '@/lib/utils/format';
 import { useSettings } from './settingsStore';
@@ -20,6 +23,10 @@ export function DataSection() {
       await clearAllData();
       if (confirm === 'all') {
         resetSettings();
+        usePrefs.getState().reset();
+        useChat.getState().clear();
+        await db.customDishes.clear();
+        await useCustomDishes.getState().load();
         Object.keys(localStorage)
           .filter((k) => k.startsWith(`${STORAGE_PREFIX}:`) && k !== `${STORAGE_PREFIX}:settings`)
           .forEach((k) => localStorage.removeItem(k));
@@ -48,7 +55,10 @@ export function DataSection() {
           クリア
         </Button>
       </Field>
-      <Field label="すべて初期化" hint="データに加えて、設定・好き嫌いも最初の状態に戻します">
+      <Field
+        label="すべて初期化"
+        hint="データに加えて、設定・好き嫌い・追加した料理も最初の状態に戻します"
+      >
         <Button variant="danger" onClick={() => setConfirm('all')}>
           初期化
         </Button>

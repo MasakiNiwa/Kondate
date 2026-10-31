@@ -64,6 +64,7 @@ export async function buildRequests(
     fixed: opts.fixed ?? [],
     useFreezer: s.useFreezer,
     timeLimit: opts.timeLimit ?? 6,
+    customDishes: await db.customDishes.toArray(),
   };
   const requests = opts.presets.map((preset) => ({
     ...base,
