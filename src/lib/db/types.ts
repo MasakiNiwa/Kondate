@@ -34,3 +34,19 @@ export interface StockItem {
   grams: number;
   updatedAt: number;
 }
+
+/** 計算 1 回分の条件（買い物リストを作り直すときに使う） */
+export interface PlanMeta {
+  planId: string;
+  preset: string;
+  startDate: string;
+  days: number;
+  trips: number;
+  servings: number;
+  riceGrams: number;
+  /** 計算したときの在庫 */
+  stock: { foodId: string; grams: number }[];
+  /** 日ごとの最高気温（計算に使ったもの） */
+  maxTemps?: number[];
+  createdAt: number;
+}
