@@ -1,0 +1,63 @@
+{
+  "name": "kondate",
+  "private": true,
+  "version": "0.1.0",
+  "description": "献立アルゴリズム — プログラムの計算が導く、今日の献立",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MasakiNiwa/Kondate.git"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run licenses && tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "licenses": "node scripts/generate-licenses.mjs",
+    "licenses:check": "node scripts/generate-licenses.mjs --check",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "comlink": "^4.4.2",
+    "date-fns": "^4.4.0",
+    "dexie": "^4.4.7",
+    "echarts": "^6.1.0",
+    "highs": "^1.15.4",
+    "lucide-react": "^1.66.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "sonner": "^2.0.8",
+    "tailwind-merge": "^3.7.0",
+    "wouter": "^3.13.0",
+    "zod": "^4.6.7",
+    "zustand": "^5.0.16"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "eslint": "^10.14.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "fake-indexeddb": "^6.2.7",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^8.3.5",
+    "vite-plugin-pwa": "^2.0.0",
+    "vitest": "^5.0.5"
+  }
+}

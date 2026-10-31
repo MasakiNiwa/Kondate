@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"
+    />
+    <meta
+      name="description"
+      content="献立アルゴリズム — プログラムの計算が導く、今日の献立。数理最適化で、まとめ買い・栄養・旬・好みを同時に満たす献立を計算します。"
+    />
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#383838" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <title>献立アルゴリズム</title>
+    <script>
+      // 初回描画前にテーマを適用してちらつきを防ぐ
+      try {
+        var s = JSON.parse(localStorage.getItem('kondate:settings') || '{}').state || {};
+        var t = s.theme || 'system';
+        document.documentElement.dataset.darkPalette = s.darkPalette || 'neutral';
+        if (
+          t === 'dark' ||
+          (t === 'system' && matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
