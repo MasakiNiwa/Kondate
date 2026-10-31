@@ -7,6 +7,7 @@ import { PageBody, PageHeader } from '@/app/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { RoleBadge } from '@/features/dishes/RoleBadge';
+import { ReactionCard } from '@/features/ai/ReactionCard';
 import { DayDetailDialog } from '@/features/plan/DayDetailDialog';
 import { GenerateDialog } from '@/features/plan/GenerateDialog';
 import { NutritionBars } from '@/features/plan/NutritionBars';
@@ -115,6 +116,7 @@ export default function HomePage() {
               keys={['energy', 'protein', 'fiber', 'salt']}
               compact
             />
+            <ReactionCard date={today} />
           </Card>
         ) : (
           <Card className="flex flex-col items-center gap-3 px-6 py-8 text-center">

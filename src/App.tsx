@@ -14,6 +14,7 @@ const DishesPage = lazy(() => import('@/pages/DishesPage'));
 const AnalysisPage = lazy(() => import('@/pages/AnalysisPage'));
 const SettingsPage = lazy(() => import('@/pages/SettingsPage'));
 const HelpPage = lazy(() => import('@/pages/HelpPage'));
+const ChatPage = lazy(() => import('@/pages/ChatPage'));
 
 export default function App() {
   useTheme();
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="/analysis" component={AnalysisPage} />
             <Route path="/settings" component={SettingsPage} />
             <Route path="/help" component={HelpPage} />
+            <Route path="/chat" component={ChatPage} />
             <Route component={HomePage} />
           </Switch>
         </Suspense>

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Link, useLocation } from 'wouter';
 import { cn } from '@/lib/utils/cn';
-import { HELP_ITEM } from './navItems';
+import { CHAT_ITEM, HELP_ITEM, type NavItem } from './navItems';
 import { ThemeToggle } from './ThemeToggle';
 
 interface PageHeaderProps {
@@ -12,22 +12,22 @@ interface PageHeaderProps {
   actions?: ReactNode;
 }
 
-/** ヘッダー右端のヘルプ */
-function HelpLink() {
+/** ヘッダー右端のアイコンのリンク（AI に相談・ヘルプ） */
+function HeaderLink({ item }: { item: NavItem }) {
   const [location] = useLocation();
-  const active = location === HELP_ITEM.to;
+  const active = location === item.to;
   return (
     <Link
-      href={HELP_ITEM.to}
-      aria-label={HELP_ITEM.label}
-      title={HELP_ITEM.label}
+      href={item.to}
+      aria-label={item.label}
+      title={item.label}
       aria-current={active ? 'page' : undefined}
       className={cn(
         'flex size-10 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-200/70 dark:text-slate-300 dark:hover:bg-slate-800',
         active && 'bg-accent-100 text-accent-800 dark:bg-accent-900/40 dark:text-accent-200',
       )}
     >
-      <HELP_ITEM.icon className="size-5" />
+      <item.icon className="size-5" />
     </Link>
   );
 }
@@ -42,8 +42,9 @@ export function PageHeader({ title, meta, actions }: PageHeaderProps) {
         {meta && <div className="min-w-0">{meta}</div>}
         <div className="ml-auto flex items-center gap-0.5">
           {actions}
+          <HeaderLink item={CHAT_ITEM} />
           <ThemeToggle />
-          <HelpLink />
+          <HeaderLink item={HELP_ITEM} />
         </div>
       </div>
     </header>
