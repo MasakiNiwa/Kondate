@@ -11,6 +11,7 @@
 | **comlink** | 4.4.2 | Apache-2.0 | https://github.com/GoogleChromeLabs/comlink |
 | **date-fns** | 4.4.0 | MIT | https://github.com/date-fns/date-fns |
 | **dexie** | 4.4.7 | Apache-2.0 | https://github.com/dexie/Dexie.js |
+| **dexie-react-hooks** | 4.4.0 | Apache-2.0 | https://github.com/dexie/Dexie.js |
 | **echarts** | 6.1.0 | Apache-2.0 | https://github.com/apache/echarts |
 | **highs** | 1.15.4 | MIT | https://github.com/lovasoa/highs-js |
 | **lucide-react** | 1.66.0 | ISC | https://github.com/lucide-icons/lucide |

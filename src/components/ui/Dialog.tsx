@@ -1,5 +1,6 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { X } from 'lucide-react';
+import { cn } from '@/lib/utils/cn';
 import { Button } from './Button';
 
 interface DialogProps {
@@ -8,10 +9,12 @@ interface DialogProps {
   onClose: () => void;
   children: ReactNode;
   footer?: ReactNode;
+  /** 横に広く（比較表など） */
+  wide?: boolean;
 }
 
 /** フォームなどを載せるモーダル（ネイティブ <dialog>。スマホでは画面いっぱい近くまで広がる） */
-export function Dialog({ open, title, onClose, children, footer }: DialogProps) {
+export function Dialog({ open, title, onClose, children, footer, wide }: DialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -25,7 +28,11 @@ export function Dialog({ open, title, onClose, children, footer }: DialogProps) 
     <dialog
       ref={ref}
       onClose={onClose}
-      className="m-auto max-h-[92dvh] w-[min(96vw,34rem)] overflow-hidden rounded-2xl border border-slate-200 bg-white p-0 text-left text-slate-900 shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+      className={cn(
+        'm-auto max-h-[92dvh] overflow-hidden',
+        wide ? 'w-[min(96vw,60rem)]' : 'w-[min(96vw,34rem)]',
+        ' rounded-2xl border border-slate-200 bg-white p-0 text-left text-slate-900 shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100',
+      )}
     >
       {open && (
         <div className="flex max-h-[92dvh] flex-col">

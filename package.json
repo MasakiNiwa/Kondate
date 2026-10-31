@@ -1,7 +1,7 @@
 {
   "name": "kondate",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "献立アルゴリズム — プログラムの計算が導く、今日の献立",
   "license": "MIT",
   "type": "module",
@@ -29,6 +29,7 @@
     "comlink": "^4.4.2",
     "date-fns": "^4.4.0",
     "dexie": "^4.4.7",
+    "dexie-react-hooks": "^4.4.0",
     "echarts": "^6.1.0",
     "highs": "^1.15.4",
     "lucide-react": "^1.66.0",
