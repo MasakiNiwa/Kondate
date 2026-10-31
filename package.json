@@ -1,7 +1,7 @@
 {
   "name": "kondate",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "献立アルゴリズム — プログラムの計算が導く、今日の献立",
   "license": "MIT",
   "type": "module",
@@ -35,6 +35,8 @@
     "lucide-react": "^1.66.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "sonner": "^2.0.8",
     "tailwind-merge": "^3.7.0",
     "wouter": "^3.13.0",

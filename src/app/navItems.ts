@@ -3,6 +3,7 @@ import {
   ChartPie,
   CircleHelp,
   House,
+  MessageCircleHeart,
   Settings,
   ShoppingBasket,
   UtensilsCrossed,
@@ -30,3 +31,4 @@ export const NAV_ITEMS: NavItem[] = [
 
 export const SETTINGS_ITEM: NavItem = { to: '/settings', label: '設定', icon: Settings };
 export const HELP_ITEM: NavItem = { to: '/help', label: 'ヘルプ', icon: CircleHelp };
+export const CHAT_ITEM: NavItem = { to: '/chat', label: 'AI に相談', icon: MessageCircleHeart };

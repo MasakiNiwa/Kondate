@@ -8,6 +8,7 @@ import {
   Info,
   Scale,
   ShieldCheck,
+  Sparkles,
 } from 'lucide-react';
 import { PageBody, PageHeader } from '@/app/PageHeader';
 import { Card, Section } from '@/components/ui/Card';
@@ -39,6 +40,7 @@ const TOPIC_ICONS = {
   usage: BookOpen,
   algorithm: Calculator,
   analysis: ChartPie,
+  ai: Sparkles,
   privacy: ShieldCheck,
 };
 

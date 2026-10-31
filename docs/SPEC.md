@@ -58,3 +58,11 @@
 - 気づき: `src/lib/analysis/insights.ts` の `INSIGHT_RULES` に関数を足す。データから決定的に計算する
 - 分析ツール: `src/features/analysis/registry.ts` の `ANALYSIS_TOOLS` にコンポーネントを足す。どのツールも `DayRow[]` を受け取り、クリックで掘り下げる（日付を押すとその日の献立を開く）
 - グラフ: ECharts（必要な部品だけ読み込む）。色は検証済みのカテゴリ色（`--viz-1`〜`--viz-8`）を固定の順番で使い、ダークモードは別の段階の色を使う
+
+## AI（Phase 3）
+
+- 入口: `src/features/ai/aiClient.ts`。いつもの AI と「応答ごとの AI」（chat / reaction / generate）を振り分ける。端末内の AI は `registerLocalBackend` で登録する
+- クラウド AI: `src/lib/cloud/`（LLLM-Study と同じ実装）。API キーはアプリの合言葉（PBKDF2 + AES-GCM）で暗号化して localStorage に保存
+- アプリの状態: `src/features/ai/appContext.ts` が構造化データ（今日の献立・これからの献立・気づき・買い物・旬・好み）を作り、システムプロンプトに入れる
+- ツール: `src/features/ai/tools.ts`（get_menu / get_day_nutrition / search_dishes / suggest_swaps / propose_swap / get_shopping_list / get_insights）。献立を変えるのは提案まで（ユーザーが押して確定）
+- キャラクター: `src/features/ai/personas.ts`。2 人のときは順番に答え、2 人目は 1 人目の発言を「[名前] 」付きで受け取る

@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/Button';
 import { Dialog } from '@/components/ui/Dialog';
 import { RoleBadge } from '@/features/dishes/RoleBadge';
+import { ReactionCard } from '@/features/ai/ReactionCard';
 import { usePrefs } from '@/features/prefs/prefsStore';
 import { useSettings } from '@/features/settings/settingsStore';
 import { FOOD_MAP, dishNutrition, getDish } from '@/lib/food/catalog';
@@ -210,6 +211,7 @@ export function DayDetailDialog({
               {plan.done ? '作った' : '作ったら記録'}
             </Button>
           </div>
+          <ReactionCard date={date} />
           <ul className="space-y-2">
             {dishes.map((d, i) => (
               <DishBlock key={d.id} dish={d} servings={plan.servings} date={date} index={i} />

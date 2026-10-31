@@ -1,4 +1,7 @@
-import { CookingPot, Palette, Sun, Users } from 'lucide-react';
+import { CookingPot, Palette, Sparkles, Sun, Users } from 'lucide-react';
+import { PersonaPicker } from '@/features/ai/PersonaPicker';
+import { CloudSettings } from '@/features/cloud/CloudSettings';
+import { TaskModels } from '@/features/cloud/TaskModels';
 import { PageBody, PageHeader } from '@/app/PageHeader';
 import { Section } from '@/components/ui/Card';
 import { Field } from '@/components/ui/Field';
@@ -148,6 +151,17 @@ export default function SettingsPage() {
             />
           </Field>
           <WeatherLocationField />
+        </Section>
+
+        <Section
+          title="AI"
+          description="接続先・API キー・キャラクター（使わなくても大丈夫）"
+          icon={<Sparkles />}
+          collapsible
+        >
+          <CloudSettings />
+          <PersonaPicker />
+          <TaskModels />
         </Section>
 
         <Section title="表示" description="テーマと配色" icon={<Palette />} collapsible>
