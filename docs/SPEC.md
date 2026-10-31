@@ -51,3 +51,10 @@
 | 調理時間   | 主菜 + 副菜・汁物 × 0.6 が目安（平日・休日）を超えた分を罰する                                        |
 
 係数は `src/lib/planner/scoring.ts` の `COEF`（円に換算した重み）にまとめている。
+
+## 分析（Phase 2）
+
+- 行データ: `src/lib/analysis/dataset.ts` の `DayRow`（1 日分の夕食。栄養・スコア・食材費・旬・たんぱく源）
+- 気づき: `src/lib/analysis/insights.ts` の `INSIGHT_RULES` に関数を足す。データから決定的に計算する
+- 分析ツール: `src/features/analysis/registry.ts` の `ANALYSIS_TOOLS` にコンポーネントを足す。どのツールも `DayRow[]` を受け取り、クリックで掘り下げる（日付を押すとその日の献立を開く）
+- グラフ: ECharts（必要な部品だけ読み込む）。色は検証済みのカテゴリ色（`--viz-1`〜`--viz-8`）を固定の順番で使い、ダークモードは別の段階の色を使う

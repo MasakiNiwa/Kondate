@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import {
   BookOpen,
   Calculator,
+  ChartPie,
   Database,
   ExternalLink,
   Info,
@@ -33,7 +34,13 @@ function Body({ children }: { children: ReactNode }) {
   return <div className="space-y-2 px-4 py-3.5 text-sm leading-relaxed sm:px-5">{children}</div>;
 }
 
-const TOPIC_ICONS = { about: Info, usage: BookOpen, algorithm: Calculator, privacy: ShieldCheck };
+const TOPIC_ICONS = {
+  about: Info,
+  usage: BookOpen,
+  algorithm: Calculator,
+  analysis: ChartPie,
+  privacy: ShieldCheck,
+};
 
 export default function HelpPage() {
   return (
