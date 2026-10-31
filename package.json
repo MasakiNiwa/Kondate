@@ -1,7 +1,7 @@
 {
   "name": "kondate",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "献立アルゴリズム — プログラムの計算が導く、今日の献立",
   "license": "MIT",
   "type": "module",

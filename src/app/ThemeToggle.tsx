@@ -1,22 +1,7 @@
-import { useSyncExternalStore } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { useSettings } from '@/features/settings/settingsStore';
-
-/** 今ダークモードで表示しているか（「端末に合わせる」のときは端末の設定） */
-function useIsDark(): boolean {
-  const theme = useSettings((s) => s.theme);
-  const systemDark = useSyncExternalStore(
-    (onChange) => {
-      const media = matchMedia('(prefers-color-scheme: dark)');
-      media.addEventListener('change', onChange);
-      return () => media.removeEventListener('change', onChange);
-    },
-    () => matchMedia('(prefers-color-scheme: dark)').matches,
-    () => false,
-  );
-  return theme === 'dark' || (theme === 'system' && systemDark);
-}
+import { useIsDark } from './useIsDark';
 
 /** ヘッダーのライト・ダークの切り替え（押すと今と反対のテーマに固定する） */
 export function ThemeToggle({ className }: { className?: string }) {
