@@ -26,4 +26,9 @@ export const DATA_CREDITS: DataCredit[] = [
     url: 'https://open-meteo.com/',
     note: '天気予報 API（CC BY 4.0）。地域を設定したときだけ、献立の期間の最高気温を取得します',
   },
+  {
+    name: 'LiteRT-LM',
+    url: 'https://github.com/google-ai-edge/LiteRT-LM',
+    note: '端末内の AI の推論エンジン（Apache-2.0）。モデルは Hugging Face の litert-community などから入手します（各モデルのライセンスに従います）',
+  },
 ];

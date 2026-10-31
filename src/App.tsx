@@ -4,6 +4,7 @@ import { Route, Router, Switch } from 'wouter';
 import { useHashLocation } from 'wouter/use-hash-location';
 import { AppLayout } from '@/app/AppLayout';
 import { useTheme } from '@/app/useTheme';
+import { useStartup } from '@/app/useStartup';
 import HomePage from '@/pages/HomePage';
 import { useSettings } from '@/features/settings/settingsStore';
 
@@ -15,9 +16,11 @@ const AnalysisPage = lazy(() => import('@/pages/AnalysisPage'));
 const SettingsPage = lazy(() => import('@/pages/SettingsPage'));
 const HelpPage = lazy(() => import('@/pages/HelpPage'));
 const ChatPage = lazy(() => import('@/pages/ChatPage'));
+const ModelsPage = lazy(() => import('@/pages/ModelsPage'));
 
 export default function App() {
   useTheme();
+  useStartup();
   const theme = useSettings((s) => s.theme);
   return (
     // GitHub Pages ではサーバー側のルーティングができないためハッシュルーティングを使う
@@ -32,6 +35,7 @@ export default function App() {
             <Route path="/settings" component={SettingsPage} />
             <Route path="/help" component={HelpPage} />
             <Route path="/chat" component={ChatPage} />
+            <Route path="/models" component={ModelsPage} />
             <Route component={HomePage} />
           </Switch>
         </Suspense>

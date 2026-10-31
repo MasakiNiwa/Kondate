@@ -3,6 +3,10 @@ import { persist } from 'zustand/middleware';
 import { STORAGE_PREFIX } from '@/lib/constants';
 import type { CloudProviderId } from '@/lib/cloud/keyVault';
 import type { AiTask } from '@/features/ai/aiTask';
+import type { BackendKind } from '@/lib/llm/types';
+
+/** auto: WebGPU が使えれば GPU（Artisan）、使えなければ CPU */
+export type BackendSetting = 'auto' | BackendKind;
 
 export type ThemeSetting = 'system' | 'light' | 'dark';
 /** ダークモードの配色。neutral: 色味のないグレーとセージ、warm: 暖かいグレー、vivid: 鮮やかな配色 */
@@ -79,6 +83,16 @@ export interface Settings {
   personas: string[];
   /** 献立を見たときに AI のひとことを出す */
   autoReaction: boolean;
+  // ---- 端末内の AI（LiteRT-LM） ----
+  backend: BackendSetting;
+  maxNumTokens: number;
+  /** ファイルから読み込んだモデルを共通の保存領域に保存する */
+  saveImportedModels: boolean;
+  /** 起動時に前回のモデルを読み込む */
+  autoLoadLastModel: boolean;
+  lastModelName: string | null;
+  /** モデルごとに、読み込めたバックエンド（自動のときに優先する） */
+  backendHints: Record<string, BackendKind>;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -104,6 +118,12 @@ export const DEFAULT_SETTINGS: Settings = {
   taskModels: {},
   personas: ['chef', 'dietitian'],
   autoReaction: false,
+  backend: 'auto',
+  maxNumTokens: 4096,
+  saveImportedModels: true,
+  autoLoadLastModel: true,
+  lastModelName: null,
+  backendHints: {},
 };
 
 interface SettingsState extends Settings {

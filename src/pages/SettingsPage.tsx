@@ -1,4 +1,7 @@
-import { CookingPot, Palette, Sparkles, Sun, Users } from 'lucide-react';
+import { CookingPot, Cpu, Palette, Sparkles, Sun, Users } from 'lucide-react';
+import { useLocation } from 'wouter';
+import { Button } from '@/components/ui/Button';
+import { useEngine } from '@/features/engine/engineStore';
 import { PersonaPicker } from '@/features/ai/PersonaPicker';
 import { CloudSettings } from '@/features/cloud/CloudSettings';
 import { TaskModels } from '@/features/cloud/TaskModels';
@@ -14,6 +17,27 @@ import { PALETTE_LABELS, THEME_LABELS, options } from '@/features/settings/label
 import { useSettings } from '@/features/settings/settingsStore';
 import { WeatherLocationField } from '@/features/settings/WeatherLocationField';
 import { formatPercent } from '@/lib/utils/format';
+
+function LocalModelField() {
+  const [, navigate] = useLocation();
+  const status = useEngine((s) => s.status);
+  const model = useEngine((s) => s.model);
+  return (
+    <Field
+      label="端末内の AI（モデルの管理）"
+      hint={
+        status === 'ready' && model
+          ? `読み込み済み: ${model.name}`
+          : 'モデルのダウンロード・読み込み・バックアップ（他の github.io サイトと共有）'
+      }
+    >
+      <Button onClick={() => navigate('/models')}>
+        <Cpu />
+        開く
+      </Button>
+    </Field>
+  );
+}
 
 const WEIGHT_LABEL = (v: number) => (v === 0 ? 'なし' : v < 1 ? '弱め' : v === 1 ? '標準' : '強め');
 
@@ -160,6 +184,7 @@ export default function SettingsPage() {
           collapsible
         >
           <CloudSettings />
+          <LocalModelField />
           <PersonaPicker />
           <TaskModels />
         </Section>

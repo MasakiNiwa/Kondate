@@ -1,7 +1,7 @@
 {
   "name": "kondate",
   "private": true,
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "献立アルゴリズム — プログラムの計算が導く、今日の献立",
   "license": "MIT",
   "type": "module",
@@ -25,6 +25,7 @@
     "node": ">=22"
   },
   "dependencies": {
+    "@litert-lm/core": "^0.18.0",
     "clsx": "^2.1.1",
     "comlink": "^4.4.2",
     "date-fns": "^4.4.0",
@@ -50,6 +51,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "@webgpu/types": "^0.1.74",
     "eslint": "^10.14.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.7",

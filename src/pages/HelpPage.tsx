@@ -3,6 +3,7 @@ import {
   BookOpen,
   Calculator,
   ChartPie,
+  Cpu,
   Database,
   ExternalLink,
   Info,
@@ -41,6 +42,7 @@ const TOPIC_ICONS = {
   algorithm: Calculator,
   analysis: ChartPie,
   ai: Sparkles,
+  local: Cpu,
   privacy: ShieldCheck,
 };
 

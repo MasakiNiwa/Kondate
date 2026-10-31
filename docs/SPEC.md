@@ -66,3 +66,10 @@
 - アプリの状態: `src/features/ai/appContext.ts` が構造化データ（今日の献立・これからの献立・気づき・買い物・旬・好み）を作り、システムプロンプトに入れる
 - ツール: `src/features/ai/tools.ts`（get_menu / get_day_nutrition / search_dishes / suggest_swaps / propose_swap / get_shopping_list / get_insights）。献立を変えるのは提案まで（ユーザーが押して確定）
 - キャラクター: `src/features/ai/personas.ts`。2 人のときは順番に答え、2 人目は 1 人目の発言を「[名前] 」付きで受け取る
+
+## 端末内の AI（Phase 4）
+
+- LiteRT-LM（`@litert-lm/core`）を Web Worker で動かす（`src/lib/llm/`、LLLM-Study と同じ実装）。Wasm は `build/vite-plugin-litertlm-wasm.ts` でセルフホスト
+- モデルの保存は [共通モデル保存仕様 v1](SHARED_MODEL_STORAGE.md)（OPFS の `shared-models/`）。同じ github.io の他のサイトと共有し、ファイルへの書き出し（バックアップ）・取り込みができる
+- モデルの一覧・入手先は LLLM-Study と同じ（`src/lib/llm/modelCatalog.ts`）
+- `src/features/ai/localBackend.ts` が端末内の AI を AI の入口（`aiClient.ts`）に登録する。応答ごとの AI で、負荷や特性に合わせてクラウドと使い分けられる

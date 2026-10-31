@@ -39,6 +39,7 @@ function TaskRow({ task, label, hint }: (typeof TASKS)[number]) {
   const available = CLOUD_PROVIDER_IDS.filter((p) => (stored[p] || unlocked[p]) && consents[p]);
   const options: { value: string; label: string }[] = [
     { value: DEFAULT, label: 'いつもの AI' },
+    { value: 'local', label: '端末内の AI' },
     ...available.map((p) => ({ value: p, label: CLOUD_PROVIDERS[p].label })),
   ];
   // 選んであった接続先のキーを消したときも、選択肢に残して分かるようにする

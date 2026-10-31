@@ -1,4 +1,12 @@
-import type { Activity, AgeBand, DarkPalette, Sex, ThemeSetting } from './settingsStore';
+import type { BackendKind } from '@/lib/llm/types';
+import type {
+  Activity,
+  AgeBand,
+  BackendSetting,
+  DarkPalette,
+  Sex,
+  ThemeSetting,
+} from './settingsStore';
 
 export const AGE_LABELS: Record<AgeBand, string> = {
   '6-7': '6〜7 歳',
@@ -36,3 +44,14 @@ export const PALETTE_LABELS: Record<DarkPalette, string> = {
 export function options<T extends string>(labels: Record<T, string>) {
   return (Object.keys(labels) as T[]).map((value) => ({ value, label: labels[value] }));
 }
+
+export const BACKEND_LABELS: Record<BackendKind, string> = {
+  'gpu-artisan': 'GPU（Artisan）',
+  gpu: 'GPU',
+  cpu: 'CPU',
+};
+
+export const BACKEND_SETTING_LABELS: Record<BackendSetting, string> = {
+  auto: '自動（おすすめ）',
+  ...BACKEND_LABELS,
+};
