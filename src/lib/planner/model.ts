@@ -1,5 +1,11 @@
-import { DISHES } from '@/lib/food/dishes';
-import { FOOD_MAP, dishNutrition, getDish, riceNutrition, seasonalPrice } from '@/lib/food/catalog';
+import {
+  FOOD_MAP,
+  dishNutrition,
+  getDish,
+  riceNutrition,
+  seasonalPrice,
+  allDishes,
+} from '@/lib/food/catalog';
 import type { Dish, DishRole, NutrientKey } from '@/lib/food/types';
 import { NUTRIENT_KEYS } from '@/lib/food/types';
 import { LpModel, type Term } from './lp';
@@ -38,7 +44,7 @@ export function candidatesFor(req: PlanRequest, day: number, role: DishRole): Di
   const age = day - trips[day].start;
   const fixed = req.fixed.find((f) => f.day === day && getDish(f.dishId)?.role === role);
   if (fixed) return [getDish(fixed.dishId)!];
-  return DISHES.filter(
+  return allDishes().filter(
     (d) => d.role === role && !isExcluded(d, req) && freshEnough(d, age, req.useFreezer),
   );
 }
@@ -59,7 +65,7 @@ export function buildModel(req: PlanRequest): BuiltModel {
   const w = req.weights;
   const trips = tripOfDay(req.days, req.trips);
   const xVars = new Map<string, [number, string]>();
-  const dishIndex = new Map(DISHES.map((d, i) => [d.id, i]));
+  const dishIndex = new Map(allDishes().map((d, i) => [d.id, i]));
   /** x[d][role] = [{ name, dish }] */
   const xs: { name: string; dish: Dish }[][][] = [];
 

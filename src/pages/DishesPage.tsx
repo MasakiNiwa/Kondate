@@ -1,5 +1,9 @@
 import { useMemo, useState } from 'react';
-import { Leaf, Search } from 'lucide-react';
+import { Leaf, Plus, Search } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { AddDishesDialog } from '@/features/custom/AddDishesDialog';
+import { useCustomDishes } from '@/features/custom/customDishStore';
+import { DISHES } from '@/lib/food/dishes';
 import { useLocation, useParams } from 'wouter';
 import { PageBody, PageHeader } from '@/app/PageHeader';
 import { Card } from '@/components/ui/Card';
@@ -11,18 +15,20 @@ import { PrefToggle } from '@/features/prefs/PrefToggle';
 import { usePrefs } from '@/features/prefs/prefsStore';
 import {
   ROLE_LABELS,
+  allDishes,
   dishNutrition,
   dishSeasonality,
   isInSeason,
   seasonalPrice,
 } from '@/lib/food/catalog';
-import { DISHES } from '@/lib/food/dishes';
 import { FOODS } from '@/lib/food/foods';
 import type { Dish, DishRole, FoodCategory } from '@/lib/food/types';
 import { cn } from '@/lib/utils/cn';
 import { formatYen } from '@/lib/utils/format';
 
 type Tab = 'dishes' | 'foods';
+
+const DISH_COUNT = DISHES.length;
 
 const FOOD_GROUPS: { label: string; cats: FoodCategory[] }[] = [
   { label: '野菜・いも・きのこ', cats: ['vegetable', 'tuber', 'mushroom', 'fruit'] },
@@ -74,15 +80,18 @@ function DishList() {
   const [picked, setPicked] = useState<Dish | null>(null);
   const { dishPrefs, setDish } = usePrefs();
   const month = new Date().getMonth() + 1;
+  const custom = useCustomDishes((s) => s.list);
   const list = useMemo(
     () =>
-      DISHES.filter(
+      allDishes().filter(
         (d) =>
           (role === 'all' || d.role === role) &&
           (!q || d.name.includes(q)) &&
           (!seasonOnly || dishSeasonality(d, month) >= 0.3),
       ),
-    [q, role, seasonOnly, month],
+    // custom: 追加した料理が変わったら一覧を作り直す
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [q, role, seasonOnly, month, custom],
   );
   return (
     <>
@@ -116,6 +125,9 @@ function DishList() {
                 <span className="block truncate text-sm font-medium">{d.name}</span>
                 <span className="block text-xs text-slate-500 dark:text-slate-400">
                   {d.minutes}分・{Math.round(dishNutrition(d).energy)}kcal
+                  {d.tags?.includes('custom') && (
+                    <span className="ml-1 text-sky-700 dark:text-sky-400">追加</span>
+                  )}
                   {dishSeasonality(d, month) >= 0.3 && (
                     <span className="ml-1 text-emerald-700 dark:text-emerald-400">旬</span>
                   )}
@@ -202,15 +214,26 @@ export default function DishesPage() {
   const params = useParams<{ tab?: string }>();
   const [, navigate] = useLocation();
   const tab: Tab = params.tab === 'foods' ? 'foods' : 'dishes';
+  const [adding, setAdding] = useState(false);
+  const count = useCustomDishes((s) => s.list.length) + DISH_COUNT;
   return (
     <>
-      <PageHeader title="料理" />
+      <PageHeader
+        title="料理"
+        actions={
+          <Button size="sm" onClick={() => setAdding(true)}>
+            <Plus />
+            <span className="max-sm:sr-only">料理を追加</span>
+          </Button>
+        }
+      />
+      <AddDishesDialog open={adding} onClose={() => setAdding(false)} />
       <PageBody>
         <Tabs<Tab>
           value={tab}
           onChange={(t) => navigate(t === 'foods' ? '/dishes/foods' : '/dishes')}
           items={[
-            { value: 'dishes', label: `料理（${DISHES.length}）` },
+            { value: 'dishes', label: `料理（${count}）` },
             { value: 'foods', label: `食材（${FOODS.length}）` },
           ]}
         />

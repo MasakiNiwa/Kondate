@@ -52,6 +52,31 @@ describe('solvePlan', () => {
     }
   }, 60_000);
 
+  it('includes custom dishes as candidates', () => {
+    const custom = {
+      id: 'c-test',
+      name: 'テストの主菜',
+      role: 'main' as const,
+      minutes: 10,
+      thermal: 'neutral' as const,
+      cuisine: 'japanese' as const,
+      protein: 'chicken' as const,
+      ingredients: [
+        { foodId: 'chicken-breast', grams: 110 },
+        { foodId: 'broccoli', grams: 60 },
+        { foodId: 'soy-sauce', grams: 6 },
+      ],
+      howto: '焼く',
+      tags: ['custom'],
+    };
+    const r = solvePlan(
+      sampleRequest({ days: 3, customDishes: [custom], fixed: [{ day: 0, dishId: 'c-test' }] }),
+      highs,
+    );
+    expect(r.days[0].dishes[0]).toBe('c-test');
+    expect(getDish('c-test')?.name).toBe('テストの主菜');
+  }, 60_000);
+
   it('prefers cold dishes on hot days', () => {
     const hot = solvePlan(
       sampleRequest({ days: 5, startDate: '2026-08-03', maxTemps: [34, 34, 34, 34, 34] }),

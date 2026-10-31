@@ -2,8 +2,7 @@ import { addDays, format, parseISO } from 'date-fns';
 import { usePrefs } from '@/features/prefs/prefsStore';
 import { loadPlanContext } from '@/features/plan/repository';
 import { computeInsights } from '@/lib/analysis/insights';
-import { DISHES } from '@/lib/food/dishes';
-import { ROLES, dishNutrition, dishSeasonality, getDish } from '@/lib/food/catalog';
+import { ROLES, dishNutrition, dishSeasonality, getDish, allDishes } from '@/lib/food/catalog';
 import { NUTRIENTS } from '@/lib/food/nutrients';
 import type { DishRole, NutrientKey } from '@/lib/food/types';
 import { NUTRIENT_KEYS } from '@/lib/food/types';
@@ -136,7 +135,7 @@ export async function runTool(
     case 'search_dishes': {
       const month = new Date().getMonth() + 1;
       const rich = str(a.rich_in) as NutrientKey;
-      let list = DISHES.filter(
+      let list = allDishes().filter(
         (d) =>
           (!a.query || d.name.includes(str(a.query))) &&
           (!a.role || d.role === a.role) &&

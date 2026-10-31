@@ -1,5 +1,4 @@
-import { DISHES } from '@/lib/food/dishes';
-import { dishSeasonality, getDish } from '@/lib/food/catalog';
+import { dishSeasonality, getDish, allDishes } from '@/lib/food/catalog';
 import type { Dish } from '@/lib/food/types';
 import { buildShopping, mealNutrition, nutritionScore, type EvalContext } from './evaluate';
 import { COEF, dayDate, isExcluded, prefCost, seasonCost, weatherFit } from './scoring';
@@ -45,7 +44,7 @@ export function rankAlternatives(
   const temp = ctx.maxTemps[day] ?? 20;
 
   const list: Alternative[] = [];
-  for (const dish of DISHES) {
+  for (const dish of allDishes()) {
     if (dish.role !== current.role || used.has(dish.id) || isExcluded(dish, prefs)) continue;
     const nextDays = days.map((d, i) =>
       i === day ? { ...d, dishes: d.dishes.map((id, j) => (j === index ? dish.id : id)) } : d,

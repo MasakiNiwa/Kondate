@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
-import { Clock, Leaf } from 'lucide-react';
+import { Clock, Leaf, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { useCustomDishes } from '@/features/custom/customDishStore';
 import { Dialog } from '@/components/ui/Dialog';
 import { NutritionBars } from '@/features/plan/NutritionBars';
 import { PrefToggle } from '@/features/prefs/PrefToggle';
@@ -24,6 +26,7 @@ const CUISINE = {
 export function DishDialog({ dish, onClose }: { dish: Dish | null; onClose: () => void }) {
   const pref = usePrefs((s) => (dish ? (s.dishPrefs[dish.id] ?? 'neutral') : 'neutral'));
   const setDish = usePrefs((s) => s.setDish);
+  const removeCustom = useCustomDishes((s) => s.remove);
   const members = useSettings((s) => s.members);
   const share = useSettings((s) => s.dinnerShare);
   // 1 品の栄養なので、夕食の目標の 1/3 を目安として表示する
@@ -58,6 +61,22 @@ export function DishDialog({ dish, onClose }: { dish: Dish | null; onClose: () =
             </span>
           </div>
           <p>{dish.howto}</p>
+          {dish.tags?.includes('custom') && (
+            <div className="flex items-center gap-2 rounded-xl bg-sky-50 px-3 py-2 text-xs text-sky-800 dark:bg-sky-900/20 dark:text-sky-300">
+              <span className="flex-1">追加した料理です</span>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => {
+                  void removeCustom(dish.id);
+                  onClose();
+                }}
+              >
+                <Trash2 />
+                削除
+              </Button>
+            </div>
+          )}
           <div>
             <h3 className="mb-1 font-semibold">材料（1 人分）</h3>
             <ul className="grid grid-cols-2 gap-x-4 text-slate-600 dark:text-slate-300">
