@@ -36,6 +36,11 @@ function ProviderChoice() {
   };
   const options: { value: AiProvider; label: string; hint: string }[] = [
     { value: 'none', label: '使わない', hint: 'AI なしでも、献立の計算・分析はすべて使えます' },
+    {
+      value: 'local',
+      label: '端末内の AI',
+      hint: 'ブラウザの中で動くモデル（LiteRT-LM）。内容は外に出ません',
+    },
     ...PROVIDER_IDS.map((p) => ({ value: p, label: PROVIDERS[p].label, hint: PROVIDERS[p].hint })),
   ];
   return (

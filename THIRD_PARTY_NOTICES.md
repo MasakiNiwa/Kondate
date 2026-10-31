@@ -7,6 +7,7 @@
 
 | Package | Version | License | Repository |
 | --- | --- | --- | --- |
+| **@litert-lm/core** | 0.18.0 | Apache-2.0 | https://github.com/google-ai-edge/LiteRT-LM |
 | **clsx** | 2.1.1 | MIT | https://github.com/lukeed/clsx |
 | **comlink** | 4.4.2 | Apache-2.0 | https://github.com/GoogleChromeLabs/comlink |
 | **date-fns** | 4.4.0 | MIT | https://github.com/date-fns/date-fns |
@@ -24,6 +25,7 @@
 | **wouter** | 3.13.0 | Unlicense | https://github.com/molefrog/wouter |
 | **zod** | 4.6.7 | MIT | https://github.com/colinhacks/zod |
 | **zustand** | 5.0.16 | MIT | https://github.com/pmndrs/zustand |
+| @litertjs/wasm-utils | 2.6.0 | Apache-2.0 | https://github.com/google-ai-edge/LiteRT |
 | @types/debug | 4.1.13 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | @types/estree | 1.0.10 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | @types/estree-jsx | 1.0.5 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |

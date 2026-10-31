@@ -147,6 +147,40 @@ export const HELP_TOPICS: HelpTopic[] = [
     ),
   },
   {
+    id: 'local',
+    title: '端末内の AI と、WebGPU が使えないとき',
+    body: (
+      <>
+        <p>
+          設定の「AI」→「端末内の AI（モデルの管理）」から、ブラウザの中で動く
+          AI（LiteRT-LM）のモデルをダウンロード・読み込みできます。会話の内容は端末の外に出ません。おすすめは
+          Gemma 4 の Web 版（ファイル名が -web.litertlm で終わるもの）です。
+        </p>
+        <ul className="list-disc space-y-1 pl-5">
+          <li>
+            保存したモデルは、同じ
+            github.io（masakiniwa.github.io）の他のサイトと共通の保存領域（OPFS の
+            shared-models/）に置かれ、どのサイトからでも使えます。他のサイトで保存済みのモデルは、ダウンロードしなくても一覧に出ます
+          </li>
+          <li>
+            ⤓
+            ボタンでモデルを端末のファイルとして書き出し（バックアップ）、「ファイルを選択」で戻せます
+          </li>
+          <li>
+            重い処理（データづくりなど）はクラウド AI、ひとことは端末内の AI、のように「応答ごとの
+            AI」で分けられます
+          </li>
+        </ul>
+        <p>
+          <strong>WebGPU が使えないとき:</strong> Gemma 4 の Web 版は WebGPU 専用です。パソコンの
+          Chrome・Edge の最新版を使う、ブラウザの設定で「ハードウェア
+          アクセラレーション」をオンにする、などで使えるようになることがあります。使えない端末でも、クラウド
+          AI と献立の計算はそのまま使えます。
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'privacy',
     title: 'データとプライバシー',
     body: (

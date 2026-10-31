@@ -10,7 +10,7 @@ interface Slot {
 let pool: Slot[] = [];
 
 function create(): Slot {
-  const worker = new Worker(new URL('./planner.worker.ts', import.meta.url), { type: 'module' });
+  const worker = new Worker(new URL('./planner.worker.ts', import.meta.url), { name: 'planner' });
   return { worker, api: Comlink.wrap<PlannerWorkerApi>(worker) };
 }
 
